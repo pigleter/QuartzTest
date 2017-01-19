@@ -13,6 +13,14 @@ public class MyTestJob implements org.quartz.Job {
 
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
+		
+		try{
+			Thread.sleep(20000);
+		}
+		catch(Exception e){
+			
+		}
+		
 		System.out.println("测试Quartz"+new Date());
 		
 		String[] params = {"3007", "L1", "S008", "H1"};

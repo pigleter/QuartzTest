@@ -11,24 +11,26 @@ import org.quartz.impl.StdSchedulerFactory;
 
 public class ScheduleApp {
 	public static void main(String[] args) {
-		SchedulerFactory schedulerfactory = new StdSchedulerFactory();  
-	       Scheduler scheduler = null;  
-	       try{
-	    	   
-	    	   scheduler = schedulerfactory.getScheduler();
-	           
-	           JobDetail job = JobBuilder.newJob(MyTestJob.class).withIdentity("job1", "jgroup1").build();
-	           
-	           Trigger trigger = TriggerBuilder.newTrigger().withIdentity("simpleTrigger", "triggerGroup")  
-	              .withSchedule(CronScheduleBuilder.cronSchedule("0,30 * * * * ? *"))  
-	              .startNow().build();
-	           
-	           
-	           scheduler.scheduleJob(job, trigger);
-	           scheduler.start();
-	             
-	       }catch(Exception e){  
-	           e.printStackTrace();  
-	       }  
+		SchedulerFactory sf = new StdSchedulerFactory();
+
+		Scheduler scheduler = null;
+
+		try{
+			scheduler = sf.getScheduler();
+
+			JobDetail job = JobBuilder.newJob(MyTest1.class).withIdentity("job", "jobgroup").build();
+			
+			Trigger trigger = TriggerBuilder.newTrigger().withIdentity("trigger", "triggerGroup")  
+              .withSchedule(CronScheduleBuilder.cronSchedule("*/10 * * L * ?"))  
+              .startNow().build();
+
+			scheduler.scheduleJob(job, trigger);
+
+			scheduler.start();
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 }
