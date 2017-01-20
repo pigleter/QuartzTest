@@ -14,16 +14,9 @@ public class MyTestJob implements org.quartz.Job {
 	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		
-		try{
-			Thread.sleep(20000);
-		}
-		catch(Exception e){
-			
-		}
+		System.out.println("测试Quartz "+new Date());
 		
-		System.out.println("测试Quartz"+new Date());
-		
-		String[] params = {"3007", "L1", "S008", "H1"};
+		//String[] params = {"3007", "L1", "S008", "H2"};
 		
 		Trans trans = null;  
         try {  
@@ -33,8 +26,13 @@ public class MyTestJob implements org.quartz.Job {
             TransMeta transMeta = new TransMeta("C:\\Users\\ivan.yu\\Desktop\\test.ktr"); 
 
             trans = new Trans(transMeta);
+            
+            trans.setParameterValue("BUKRS", "3007");
+            trans.setParameterValue("SPART", "L1");
+            trans.setParameterValue("VKORG", "S008");
+            trans.setParameterValue("VTWEG", "H2");
 
-            trans.execute(params);
+            trans.execute(null);;
             // 等待转换执行结束  
             trans.waitUntilFinished();  
             // 抛出异常  
@@ -42,7 +40,7 @@ public class MyTestJob implements org.quartz.Job {
                 throw new Exception(  
                         "There are errors during transformation exception!(传输过程中发生异常)");  
             }  
-        } catch (Exception e) {  
+        } catch (Exception e) {
             e.printStackTrace();  
         }  
 
